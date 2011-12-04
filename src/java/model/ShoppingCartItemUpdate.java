@@ -71,4 +71,9 @@ public class ShoppingCartItemUpdate {
         
         return result;
     }
+    
+    public boolean clearCart(String userID){
+        //clear all items in ShoppingCartItem table where userid equals the one given
+        return true;
+    }
 }

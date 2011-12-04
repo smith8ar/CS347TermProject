@@ -4,7 +4,8 @@
     Author     : lynerc
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="java.util.*, model.*" contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -22,14 +23,64 @@
           <div id="left">
 
             <h1>Navigation</h1>
-            <ul>
+            
+                <%
+                if(session.getAttribute("isAdmin")==null){                 
+                %>
+                
+                <p>Please Login or create a new account to use the 
+                full features of this web application</p>
+                
+                <%
+                }
+                else if(session.getAttribute("isAdmin").equals("no")){        
+                %>
+                <ul>
                 <li><a href="#">My Account</a></li>
-                <li><a href="#">Shopping Cart</a></li>
-                <li><a href="#">Wish List</a></li>
+                <li><a href="shoppingcart.jsp">Shopping Cart</a></li>
+                <li><a href="wishlist.jsp">Wish List</a></li> 
+                </ul>
+                
+                <%
+                    }
+                    else if(session.getAttribute("isAdmin").equals("yes")){
+                %>
+                
+                <ul>
+                <li><a href="#">Orders</a></li>
+                <li><a href="#">Users</a></li>
+                <li><a href="#">Items</a></li>
+                </ul>
+                
+                <%
+                    }
+                %>
             </ul>
 
           </div>
           <div id="right">
+            <p>
+                <%
+                
+                if (session.getAttribute("loggedin")!=null) {
+                    UserRequest ur = new UserRequest();
+                    out.print("Hello" + ur.getName((String)session.getAttribute("userEmail")));
+                
+                %>
+            <form method="post" action="Login" >
+                <p><input type="submit" name="logout" value="Log Out"/></p>
+            </form>
+                <%
+                }
+                else{
+                %>
+                   <jsp:include page="/login.jsp"/>
+               <%
+               }
+               %>
+                
+            </p
+            
             <p>
             <ul>
                 <li><a href="registration.jsp">Register!</a></li>
